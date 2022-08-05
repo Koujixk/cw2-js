@@ -19,6 +19,7 @@ function findApiFromLocalStorage() {
 }
 findApiFromLocalStorage()
 const tableFetch = document.getElementById('table-fetch')
+let tableHeaders
 
 const addingValuesToTable = (arr) => {
     tableFetch.innerHTML = `
@@ -29,6 +30,7 @@ const addingValuesToTable = (arr) => {
         <th>${Object.keys(arr[0])[4]}</th>
     </tr>
     `
+    tableHeaders = document.querySelectorAll('th')
     arr.forEach((el, index) => {
 
         tableFetch.innerHTML += `
@@ -55,6 +57,7 @@ const refreshingTableUsingInput = (arr) => {
         <th>${Object.keys(arr[0])[4]}</th>
     </tr>
     `
+    tableHeaders = document.querySelectorAll('th > button:last-child')
     arr.forEach((el, index) => {
         if(el.title.toLowerCase().includes(searchInput.value.toLowerCase())){
 
@@ -78,4 +81,30 @@ const refreshingTableUsingInput = (arr) => {
             `
         }
     });
+}
+
+const reset = (arr) => {
+    searchInput.value = ''
+    tableFetch.innerHTML = ''
+    tableFetch.innerHTML = `
+    <tr>
+        <th>${Object.keys(arr[0])[0]}</th>
+        <th>${Object.keys(arr[0])[1]}</th>
+        <th>${Object.keys(arr[0])[9]}</th>
+        <th>${Object.keys(arr[0])[4]}</th>
+    </tr>
+    `
+    tableHeaders = document.querySelectorAll('th')
+    arr.forEach((el, index) => {
+
+        tableFetch.innerHTML += `
+        <tr>
+            <td>${el.id}</td>
+            <td>${el.title}</td>
+            <td>${el.release_date}</td>
+            <td><div id="${"table-image" + index}" class='table-images'></div></td>
+        </tr>
+        `
+        document.getElementById(`${"table-image" + index}`).style.backgroundImage = `url(${el.image})`
+    })
 }

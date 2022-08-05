@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <button></button>
-    <input placeholder="search by title" class="input search" id ='search-input' onkeydown="refreshingTableUsingInput(filmsArray)">
+    <div class="searching-container">
+        <button class="reset-button" onclick="reset(filmsArray)">Reset</button>
+        <input placeholder="search by title" class="input-search" id ='search-input' onkeydown="refreshingTableUsingInput(filmsArray)">
+    </div>
     <table class="table-fetch" id="table-fetch"></table>
-
     <script src="./script.js"></script>
 </body>
 </html>
