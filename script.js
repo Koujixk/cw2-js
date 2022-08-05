@@ -20,23 +20,62 @@ function findApiFromLocalStorage() {
 findApiFromLocalStorage()
 const tableFetch = document.getElementById('table-fetch')
 
-tableFetch.innerHTML = `
-        <tr>
-            <th>${Object.keys(filmsArray[0])[0]}</th>
-            <th>${Object.keys(filmsArray[0])[1]}</th>
-            <th>${Object.keys(filmsArray[0])[9]}</th>
-            <th>${Object.keys(filmsArray[0])[4]}</th>
-        </tr>
-`
-filmsArray.forEach((el, index) => {
-    console.log(el)
-    tableFetch.innerHTML += `
+const addingValuesToTable = (arr) => {
+    tableFetch.innerHTML = `
+    <tr>
+        <th>${Object.keys(arr[0])[0]}</th>
+        <th>${Object.keys(arr[0])[1]}</th>
+        <th>${Object.keys(arr[0])[9]}</th>
+        <th>${Object.keys(arr[0])[4]}</th>
+    </tr>
+    `
+    arr.forEach((el, index) => {
+
+        tableFetch.innerHTML += `
         <tr>
             <td>${el.id}</td>
             <td>${el.title}</td>
             <td>${el.release_date}</td>
-            <td><div class='table-images' id="${"table-image" + index}"></div></td>
+            <td><div id="${"table-image" + index}" class='table-images'></div></td>
         </tr>
+        `
+        document.getElementById(`${"table-image" + index}`).style.backgroundImage = `url(${el.image})`
+    })
+    
+}
+addingValuesToTable(filmsArray)
+const searchInput = document.getElementById('search-input')
+const refreshingTableUsingInput = (arr) => {
+    tableFetch.innerHTML = ''
+    tableFetch.innerHTML += `
+    <tr>
+        <th>${Object.keys(arr[0])[0]}</th>
+        <th>${Object.keys(arr[0])[1]}</th>
+        <th>${Object.keys(arr[0])[9]}</th>
+        <th>${Object.keys(arr[0])[4]}</th>
+    </tr>
     `
-    document.getElementById(`${"table-image" + index}`).style.backgroundImage = `url(${el.image})`
-});
+    arr.forEach((el, index) => {
+        if(el.title.toLowerCase().includes(searchInput.value.toLowerCase())){
+
+            tableFetch.innerHTML += `
+            <tr>
+                <td>${el.id}</td>
+                <td>${el.title}</td>
+                <td>${el.release_date}</td>
+                <td><div id="${"table-image" + index}" class='table-images'></div></td>
+            </tr>
+            `
+            document.getElementById(`${"table-image" + index}`).style.backgroundImage = `url(${el.image})`
+        }else if(searchInput.value == false){
+            tableFetch.innerHTML += `
+            <tr>
+                <td>${el.id}</td>
+                <td>${el.title}</td>
+                <td>${el.release_date}</td>
+                <td><div id="${"table-image" + index}" class='table-images'></div></td>
+            </tr>
+            `
+        }
+    });
+}
